@@ -1,4 +1,4 @@
-import { getPostById, getPostIds } from "../lib/post"
+import { getPostById, getPostIds } from "../../lib/post"
 
 function Post({ post }) {
   return (
