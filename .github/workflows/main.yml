@@ -2,27 +2,55 @@ name: Push Develop Trigger
 
 on:
   push:
-    branches: [learn]
+    branches: [learn, develop]
 
   workflow_dispatch:
 
 jobs:
-  build-and-publish:
-    name: build and publish
+  build-and-deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
-      - name: npm install
-        uses: actions/checkout@v2
-        with:
-          args: install
 
-      - name: docker login registry.teav4.com
+      - name: Docker login registry.teav4.com
         run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login registry.teav4.com -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-      - name: docker build
+      
+      - name: Docker build
         run: docker build -t ani:latest .
+      
       - name: Tag the Docker image
         run: docker tag ani:latest registry.teav4.com/ani:latest
-      - name: docker push
+      
+      - name: Docker push registry
         run: docker push registry.teav4.com/ani:latest
+      
+      - name: Pre install
+        run: sudo apt update && sudo apt install openssh-client bash
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_RSA }}
+          name: id_rsa
+          known_hosts: "known_hosts"
+          
+      - name: Add known host
+        run: |
+          ssh-keyscan -H $SSH_SERVER_IP >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_RSA}}
+          SSH_SERVER_IP: ${{ secrets.SSH_HOSTNAME }}
+          SSH_USER: ${{secrets.SSH_USERNAME}}
+      
+      - name: Connect to server & deploy
+        run: |
+          ssh $SSH_USER@$SSH_SERVER_IP "docker pull registry.teav4.com/ani:latest \
+           && docker stop anicollection-frontend && docker rm anicollection-frontend \
+           && docker run -p 3000:3000 -d --name=anicollection-frontend registry.teav4.com/ani:latest"
+        shell: bash
+        env:
+          SSH_USER: ${{secrets.SSH_USERNAME}}
+          SSH_SERVER_IP: ${{secrets.SSH_HOSTNAME}}
