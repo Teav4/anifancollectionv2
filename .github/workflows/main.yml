@@ -2,7 +2,7 @@ name: Push Develop Trigger
 
 on:
   push:
-    branches: [develop]
+    branches: [learn]
 
   workflow_dispatch:
 
@@ -11,21 +11,18 @@ jobs:
     name: build and publish
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
+      
       - name: npm install
-        uses: actions/npm@master
+        uses: actions/checkout@v2
         with:
           args: install
+
+      - name: docker login registry.teav4.com
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login registry.teav4.com -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - name: docker build
-        uses: actions/docker/cli@master
-        with:
-          args: build -t ani .
-      - name: docker login register.teav4.com
-        uses: actions/docker/login@master
-        env:
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: docker build -t ani:latest .
+      - name: Tag the Docker image
+        run: docker tag ani:latest registry.teav4.com/ani:latest
       - name: docker push
-        uses: actions/docker/cli@master
-        with:
-          args: push ani
+        run: docker push registry.teav4.com/ani:latest
