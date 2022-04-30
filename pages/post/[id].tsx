@@ -1,6 +1,14 @@
 import { getPostById, getPostIds } from "../../lib/post"
 
-function Post({ post }) {
+type getPostProps = {
+  post: any,
+}
+
+type getStaticProps = {
+  params: any,
+}
+
+function Post({ post }: getPostProps) {
   return (
     <div>
       Hello {post.title} 
@@ -18,7 +26,7 @@ export const getStaticPaths = async () => {
   }
 }
 
-export const getStaticProps = async ({ params }) => {
+export const getStaticProps = async ({ params }: getStaticProps) => {
   const post = await getPostById(params.id) 
 
   return {
