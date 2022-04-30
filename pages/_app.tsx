@@ -1,7 +1,15 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
+import { AuthContextProvider } from 'modules/auth'
+import MainLayout from 'shared/components/Layout/MainLayout'
 
-function MyApp({ Component, pageProps }: any) {
-  return <Component {...pageProps} />
+function App({ Component, pageProps }: any) {
+  return (
+    <AuthContextProvider>
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
+    </AuthContextProvider>
+  )
 }
 
-export default MyApp
+export default App
