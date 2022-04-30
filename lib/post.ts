@@ -13,14 +13,14 @@ export const getPost = async () => {
 export const getPostIds = async () => {
   const posts = await getPost()
 
-  return posts.map(post => ({
+  return posts.map((post: any) => ({
     params: {
       id: `${post.id}`
     }
   }))
 }
 
-export const getPostById = async id => {
+export const getPostById = async (id: string) => {
   try {
     
     const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
