@@ -1,8 +1,8 @@
 import React from 'react'
 import classes from './MainLayout.module.scss'
 import Header from '../Header/Header'
-import SideBar from '../SideBar/SideBar'
 
+// import { SideBar } from '../SideBar'
 type Props = { children: React.ReactNode }
 
 function MainLayout({ children }: Props) {
@@ -11,8 +11,7 @@ function MainLayout({ children }: Props) {
     <>
       <main className={classes['main-layout']}>
         <Header />
-        <SideBar isOpen={true}/>
-
+        {/* <SideBar isOpen={true}/> */}
         <div className={classes['ani-container']}>
           {children}
         </div>

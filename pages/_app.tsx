@@ -1,4 +1,5 @@
 import '../styles/globals.scss'
+import 'antd/dist/antd.css';
 import { AuthContextProvider } from 'modules/auth'
 import MainLayout from 'shared/components/Layout/MainLayout'
 

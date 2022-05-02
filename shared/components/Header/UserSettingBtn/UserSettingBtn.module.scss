@@ -1,0 +1,8 @@
+.user-setting-btn {
+  @apply h-8;
+  
+  & button {
+    @apply border-0 text-xl text-gray-500 px-3;
+  }
+}
+

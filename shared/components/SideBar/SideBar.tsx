@@ -5,13 +5,10 @@ type Props = {
   isOpen: boolean,
 }
 
-function SideBar({ isOpen }: Props) {
-
+export function SideBar({ isOpen }: Props) {
   return (
     <div className={classes['sidebar']}>
       { isOpen && <div>Sidebar</div> }
     </div>
   )
 }
-
-export default SideBar
