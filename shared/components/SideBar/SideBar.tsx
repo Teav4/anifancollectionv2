@@ -6,7 +6,6 @@ type Props = {
 }
 
 export function SideBar({ isOpen }: Props) {
-
   return (
     <div className={classes['sidebar']}>
       { isOpen && <div>Sidebar</div> }
