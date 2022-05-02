@@ -5,7 +5,7 @@ type Props = {
   isOpen: boolean,
 }
 
-function SideBar({ isOpen }: Props) {
+export function SideBar({ isOpen }: Props) {
 
   return (
     <div className={classes['sidebar']}>
@@ -13,5 +13,3 @@ function SideBar({ isOpen }: Props) {
     </div>
   )
 }
-
-export default SideBar

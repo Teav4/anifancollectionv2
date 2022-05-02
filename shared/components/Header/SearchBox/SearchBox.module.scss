@@ -1,0 +1,17 @@
+.search-box {
+  @apply h-8 w-[261px] float-right;
+  @apply flex relative;
+  @apply mr-8;
+
+  .search-icon {
+    /* @apply ; */
+  }
+
+  & input {
+    @apply border-none w-full h-full;
+  }
+
+  & input:focus {
+    @apply border-none;
+  }
+}
