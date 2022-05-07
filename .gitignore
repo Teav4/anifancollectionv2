@@ -33,3 +33,6 @@ yarn-error.log*
 package-lock.json
 ani_rsa.pub
 ani_rsa
+
+# cypress
+cypress/cucumber-json

@@ -1,0 +1,19 @@
+{
+  "env": {
+    "TAGS": "not (@pending or @manual)"
+  },
+  "baseUrl": "http://localhost:3000/ani",
+  "testFiles": "**/*.feature",
+  "pageLoadTimeout": 30000,
+  "defaultCommandTimeout": 30000,
+  "chromeWebSecurity": false,
+  "modifyObstructiveCode": false,
+  "reporter": "junit",
+  "reporterOptions": {
+    "overwrite": false,
+    "html": false,
+    "json": true,
+    "reportDir": "cypress/reports/junit",
+    "mochaFile": "cypress/reports/test-output-[hash].xml"
+  }
+}
